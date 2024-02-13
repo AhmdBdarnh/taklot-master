@@ -27,10 +27,36 @@ const getUserByID = async (req, res) => {
   }
 };
 
-// get index
+// get home page
 const getindex = async (req, res) => {
   try {
       res.render('index');
+  } 
+  catch (err) {
+    return res.status(err?.status || 500).json({ message: err.message });
+  }
+};
+
+// update user
+const user_update = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userRepository.udpateUser(id,req.body);
+    if (!user || user.length === 0) throw new NotFoundError('User');
+    return res.status(200).send(user);
+  } 
+  catch (err) {
+    return res.status(err?.status || 500).json({ message: err.message });
+  }
+};
+
+// update user
+const user_delete = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userRepository.deleteUser(id);
+    if (!user || user.length === 0) throw new NotFoundError('User');
+    return res.status(200).send(user);
   } 
   catch (err) {
     return res.status(err?.status || 500).json({ message: err.message });
@@ -41,5 +67,7 @@ const getindex = async (req, res) => {
 module.exports = {
   user_post,
   getUserByID,
-  getindex
+  getindex,
+  user_update,
+  user_delete
 };

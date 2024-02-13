@@ -22,10 +22,30 @@ const addUser = async userData => {
 };
 
 
+const udpateUser = async (id, newData) => {
+    try {
+        const user = await User.findByIdAndUpdate(id,newData);
+        return user;
+    } catch (error) {
+        console.error("Error saving user:", error);
+        throw error;    
+    }
+};
 
+const deleteUser = async id => {
+    try {
+        const user = await User.findByIdAndDelete(id);
+        return user;
+    } catch (error) {
+        console.error("Error saving user:", error);
+        throw error;    
+    }
+};
 
 
 module.exports = {
     getUserByID,
     addUser,
+    udpateUser,
+    deleteUser
 };
