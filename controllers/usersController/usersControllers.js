@@ -7,7 +7,7 @@ const user_post = async (req, res) => {
   try {
     const new_user = await userRepository.addUser(req.body);
     if (!new_user) throw new BadRequsetError(`User implement is not true`);
-    res.status(200).redirect(req.originalUrl);
+       return res.status(200).render("index");
   } 
   catch (err) {
     res.status(err?.status || 500).json({ message: err.message });
@@ -27,9 +27,19 @@ const getUserByID = async (req, res) => {
   }
 };
 
+// get index
+const getindex = async (req, res) => {
+  try {
+      res.render('index');
+  } 
+  catch (err) {
+    return res.status(err?.status || 500).json({ message: err.message });
+  }
+};
 
 
 module.exports = {
   user_post,
-  getUserByID
+  getUserByID,
+  getindex
 };
