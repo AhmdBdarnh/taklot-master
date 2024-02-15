@@ -7,7 +7,6 @@ const { NotFoundError, BadRequsetError } = require('../../errors/err');
 
 
 
-
 // add new User to db
 const user_post = async (req, res) => {
   try {
