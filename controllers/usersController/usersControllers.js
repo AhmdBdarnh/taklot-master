@@ -2,12 +2,23 @@ const userRepository = require('../../repository/userRepository/userRepos');
 const { NotFoundError, BadRequsetError } = require('../../errors/err');
 
 
+const session = require('express-session');
+app.use(session({
+  secret: 'your_secret_key', // Change this to a long, random string
+  resave: false,
+  saveUninitialized: false
+}));
+
+
+
+
+
 // add new User to db
 const user_post = async (req, res) => {
   try {
     const new_user = await userRepository.addUser(req.body);
     if (!new_user) throw new BadRequsetError(`User implement is not true`);
-       return res.status(200).render("index");
+       return res.status(200).render("signup");
   } 
   catch (err) {
     res.status(err?.status || 500).json({ message: err.message });
@@ -27,15 +38,43 @@ const getUserByID = async (req, res) => {
   }
 };
 
-// get home page
-const getindex = async (req, res) => {
+// get signup page
+const getSignup = async (req, res) => {
   try {
-      res.render('index');
+      res.render('signup');
   } 
   catch (err) {
     return res.status(err?.status || 500).json({ message: err.message });
   }
 };
+
+const getLogin = async (req, res) => {
+  try {
+      res.render('login');
+  } 
+  catch (err) {
+    return res.status(err?.status || 500).json({ message: err.message });
+  }
+};
+const request = require('../../module/reuqestsSchema/request');
+
+// get get page
+const post_Login = async (req, res) => {
+  try {
+    const { userName, password } = req.body;
+    const resp = await userRepository.checkUser(userName, password);
+    
+    if (!resp.isMatch) {
+      return res.status(400).render('login', { error: 'Invalid username or password' });
+    }
+    // Redirect to the home page after successful login
+    res.redirect('/home');
+  } 
+  catch (err) {
+    return res.status(err?.status || 500).json({ message: err.message });
+  }
+};
+
 
 // update user
 const user_update = async (req, res) => {
@@ -63,11 +102,28 @@ const user_delete = async (req, res) => {
   }
 };
 
+// get all User in db
+const getAllUsers = async (req, res) => {
+  try {
+    const user = await userRepository.gettAllUsers();
+    if (!user || user.length === 0) throw new NotFoundError('User');
+    return res.status(200).send(user);
+  } 
+  catch (err) {
+    return res.status(err?.status || 500).json({ message: err.message });
+  }
+};
+
+
+
 
 module.exports = {
   user_post,
   getUserByID,
-  getindex,
+  getSignup,
   user_update,
-  user_delete
+  user_delete,
+  getAllUsers,
+  getLogin,
+  post_Login
 };

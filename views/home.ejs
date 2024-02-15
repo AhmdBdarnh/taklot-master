@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Request list </title>
+</head>
+<body>
+    <header><img src="/images/image 1.png"> </header>
+    <h6 class="path">Requests</h6>
+    <h3 class="big_title">Welcome :- </h3>
+    <div class="bigrequest">
+        <section class="bigtitle"><section>Request : 1</section></section>
+        <div class="request">
+            <section class="imagerequest">
+                
+            <% if (latestImage) { %>
+                <img id="img" src="data:<%= latestImage.contentType %>;base64,<%= latestImage.image.toString('base64') %>" alt="Uploaded Image">
+            <% } %>
+            </section>
+            <section class="infor">
+                 <section> Your Name :-</section>
+                 <section>Phone Number :-</section>
+                 <section> More Details :- </section>
+            </section>
+ 
+            <section class="editdelete">
+                <button type="button">Edit</button>
+                <button type="button">Delete</button>
+            </section>
+        </div>
+ 
+        <section class="line"></section>
+ 
+        <div class="Offers">
+            <section class="offertitles">Offers</section>
+        <div class="offerlist">
+            <div class="offeritem">
+                <div class="technicalname">Technical Name 1</div>
+                <div class="bit">Price</div>
+                <div class="comments">This is a comment about the offer.</div>
+            </div>
+        </div>
+ 
+        </div>
+ 
+    </div>
+ 
+</body>
+</html>

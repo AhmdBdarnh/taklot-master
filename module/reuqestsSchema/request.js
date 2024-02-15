@@ -2,27 +2,27 @@ const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
     helpseekerId: {
-        type: Number,
-        required: true
+        type: String,
+        // required: true
       },
       image: {
-        data: Buffer,
+        filename: String,
         contentType: String,
-        required: true
+        image: Buffer
       },
       status: {
         type: String,
         enum: ['pending', 'approved', 'rejected'],
         default: 'pending'
       },
-      details: {
-        type: String,
-        required: true
-      },
       category: {
         type: String,
-        required: true
+        // required: true
+      },
+      details: {
+        type: String,
       }
+
 });
 
 const Request = mongoose.model('Request', requestSchema);
