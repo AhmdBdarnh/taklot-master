@@ -2,16 +2,6 @@ const userRepository = require('../../repository/userRepository/userRepos');
 const { NotFoundError, BadRequsetError } = require('../../errors/err');
 
 
-const session = require('express-session');
-app.use(session({
-  secret: 'your_secret_key', // Change this to a long, random string
-  resave: false,
-  saveUninitialized: false
-}));
-
-
-
-
 
 // add new User to db
 const user_post = async (req, res) => {
